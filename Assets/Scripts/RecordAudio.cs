@@ -632,18 +632,14 @@ public class RecordAudio : RecorderManager
             value = Mathf.Clamp(value, 0f, 1f);
 
             // Calculate the playback position in seconds
-            float playbackPosition = value * playbackSource.clip.length;
-
             if (!playbackSource.isPlaying)
             {
+                float playbackPosition = value * playbackSource.clip.length;
                 playbackSource.Play();
                 playbackSource.Pause();
+                playbackSource.time = Mathf.Clamp(playbackPosition, 0f, playbackSource.clip.length - 0.01f);
             }
-            this.playbackButton.texture = this.playbackBtnTexs[playbackSource.isPlaying? 1 : 0];
-
-            // Clamp the playback position to ensure it doesn't exceed the clip length
-            playbackSource.time = Mathf.Clamp(playbackPosition, 0f, playbackSource.clip.length - 0.01f);
-
+            this.playbackButton.texture = this.playbackBtnTexs[playbackSource.isPlaying ? 1 : 0];
             this.updatePlayBackText(playbackSource.time);
         }
     }
