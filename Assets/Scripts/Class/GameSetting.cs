@@ -121,7 +121,34 @@ public class GameSetting : MonoBehaviour
                 LogController.Instance?.UpdateVersion("prod");
                 break;
             default:
-                LogController.Instance?.UpdateVersion("dev");
+                if (string.IsNullOrEmpty(hostName))
+                {
+                    this.currentHostName = HostName.dev;
+                    LogController.Instance?.UpdateVersion("dev");
+                }
+                else
+                {
+                    if (hostName.Contains("dev"))
+                    {
+                        this.currentHostName = HostName.dev;
+                        LogController.Instance?.UpdateVersion("dev");
+                    }
+                    else if (hostName.Contains("uat"))
+                    {
+                        this.currentHostName = HostName.uat;
+                        LogController.Instance?.UpdateVersion("uat");
+                    }
+                    else if (hostName.Contains("pre"))
+                    {
+                        this.currentHostName = HostName.preprod;
+                        LogController.Instance?.UpdateVersion("preprod");
+                    }
+                    else
+                    {
+                        this.currentHostName = HostName.prod;
+                        LogController.Instance?.UpdateVersion("prod");
+                    }
+                }
                 break;
         }
         this.CurrentHostName = hostName;

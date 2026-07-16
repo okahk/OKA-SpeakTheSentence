@@ -104,7 +104,7 @@ public class GameController : GameBaseController
                             }
                         }
 
-                        int star = (stars != null && stars.Length == 1) ? stars[0] : 0;
+                        int star = (stars != null && stars.Length == 1) ? stars[0] : -1;
                         this.endGamePage.updateFinalScoreWithStar(0, playerController.Score, star, () =>
                         {
                             if (this.endGamePage.scoreEndings[0].starNumber > 0)

@@ -50,6 +50,8 @@
             <p>FOR BETTER EXPERIENCE</p>
         </div>
     </div>
+	  <script src="../../hashChange.js"></script>
+	  <script src="../../hashChangeHandler.js"></script>
       <script src="./recorder.wav.min.js"></script>
       <script>
 		async function accessAudio(unityInstance) {
@@ -150,13 +152,13 @@
 
 	  	let unityInstance;
 
-		window.onbeforeunload = function(e) {
+		/*window.onbeforeunload = function(e) {
 			console.log("Calling OnClose from Browser!");
 			unityInstance.SendMessage('Loader', 'QuitGame');
 			var dialogText = "You game has been saved!  Would you like to continue unloading the page?";
 			e.returnValue = dialogText;
 			return dialogText;
-		};
+		};*/
 
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");

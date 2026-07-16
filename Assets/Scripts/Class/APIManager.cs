@@ -963,6 +963,11 @@ public static class APIConstant
 
     public static string GameAddCurrencyAPI(LoaderConfig loader)
     {
+        if (string.IsNullOrEmpty(StarwishpartySiteDomain(loader)))
+        {
+            LogController.Instance?.debug("Current site not support starwish add currency api.");
+            return string.Empty;
+        }
         return $"{StarwishpartySiteDomain(loader)}/OKAGames/public/index.php/api/accounts/add-currency";
     }
 
@@ -974,16 +979,31 @@ public static class APIConstant
 
     public static string GetStarwishPartyAccountAPI(LoaderConfig loader)
     {
+        if (string.IsNullOrEmpty(StarwishpartySiteDomain(loader)))
+        {
+            LogController.Instance?.debug("Current site not support starwish add currency api.");
+            return string.Empty;
+        }
         return $"{StarwishpartySiteDomain(loader)}/OKAGames/public/index.php/api/accounts/{loader.apiManager.accountUid}";
     }
 
     public static string GetHelpToolInventoryAPI(LoaderConfig loader)
     {
+        if (string.IsNullOrEmpty(StarwishpartySiteDomain(loader)))
+        {
+            LogController.Instance?.debug("Current site not support starwish add currency api.");
+            return string.Empty;
+        }
         return $"{StarwishpartySiteDomain(loader)}/OKAGames/public/index.php/api/help-tools/user/inventory";
     }
 
     public static string UpdateUseOfHelpToolAPI(LoaderConfig loader)
     {
+        if (string.IsNullOrEmpty(StarwishpartySiteDomain(loader)))
+        {
+            LogController.Instance?.debug("Current site not support starwish add currency api.");
+            return string.Empty;
+        }
         return $"{StarwishpartySiteDomain(loader)}/OKAGames/public/index.php/api/help-tools/use";
     }
 
@@ -992,7 +1012,6 @@ public static class APIConstant
         string domain = "";
         if (isLoginedStarwishPartySite(loader))
         {
-            //test prod
             if (loader.CurrentHostName.Contains("www.starwishparty.com") ||
                 loader.CurrentHostName.Contains("pro.starwishparty.com") ||
                 loader.CurrentHostName.Contains("rainbowone.app") ||
@@ -1001,7 +1020,10 @@ public static class APIConstant
             else
                 domain = loader.CurrentHostName;
         }
-
+        else
+        {
+            return string.Empty;
+        }
         return domain;
     }
 
@@ -1009,14 +1031,18 @@ public static class APIConstant
     {
         bool isLogined = loader.apiManager.IsLogined;
         if (!isLogined) return false;
-        /*bool isLoginedStarwishParty = 
+        bool isLoginedStarwishParty =
                           loader.CurrentHostName.Contains("dev.starwishparty.com") ||
                           loader.CurrentHostName.Contains("uat.starwishparty.com") ||
                           loader.CurrentHostName.Contains("pre.starwishparty.com") ||
                           loader.CurrentHostName.Contains("www.starwishparty.com") ||
-                          loader.CurrentHostName.Contains("rainbowone.app") ||
-                          loader.CurrentHostName.Contains("www.rainbowone.app");*/
-        return loader.apiManager.starwishPartyDomains.Any(domain => loader.CurrentHostName.Contains(domain, StringComparison.OrdinalIgnoreCase));
+                          loader.CurrentHostName.Contains("app.starwishparty.com");
+        return isLoginedStarwishParty;
+    }
+
+    public static string RainbowOneAPIEndPoint(LoaderConfig loader)
+    {
+        return $"{loader.CurrentHostName}/RainbowOne/index.php/PHPGateway/proxy/2.8/";
     }
 
     public static string blobServerRelativePath
